@@ -1,4 +1,4 @@
-import { addFilter } from '@wordpress/hooks';
+import { addFilter, applyFilters } from '@wordpress/hooks';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Button, PanelBody, ToggleControl, SelectControl, RangeControl } from '@wordpress/components';
 import { createHigherOrderComponent } from '@wordpress/compose';
@@ -7,7 +7,7 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import lodash from 'lodash';
 
-const allowedBlocks = [ 'core/group', 'core/column' ];
+const allowedBlocks = applyFilters( 'animationFilters.supportedBlocks', [ 'core/group', 'core/column' ] );
 
 import 'animate.css';
 import '../sass/_style.scss';
@@ -26,7 +26,10 @@ const getAnimationNames = () => {
 			}
 		}
 	});
-	return animationNames;
+
+	const FilteredAnimationNames = applyFilters( 'animationFilters.animationNames', animationNames );
+
+	return FilteredAnimationNames;
 };
 
 const extraAttributes = ( settings ) => {
@@ -76,8 +79,7 @@ const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
 			   animationType,
 			   animationDuration,
 			   animationDelay,
-			   animationTiming,
-			   previewAnimation
+			   animationTiming
 		   },
 		   setAttributes,
 		   name,
@@ -92,10 +94,11 @@ const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
 	   }, [] );
 
 	   const [ animationNames, setAnimationNames ] = useState( [] );
+	   const [ previewAnimation, setPreviewAnimation ] = useState( false );
 
 	   return (
 		   <Fragment>
-			   <BlockEdit { ...props } />
+			   <BlockEdit { ...props } previewAnimation={previewAnimation} />
 			   <InspectorControls>
 				   <PanelBody
 					   title={ __( 'Animation Settings', 'animation-filters' ) }
