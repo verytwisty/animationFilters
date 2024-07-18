@@ -1,0 +1,76 @@
+{
+  "name": "verytwisty/animation-filter",
+  "type": "wordpress-project",
+
+  "description": "",
+  "homepage": "https://wpspecialprojects.com",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Contributors",
+      "homepage": "https://github.com/a8cteam51/blazepro/graphs/contributors"
+    }
+  ],
+
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/a8cteam51/team51-configs"
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*",
+        "wpackagist-theme/*"
+      ]
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "a8cteam51/team51-configs": "dev-trunk",
+
+    "wp-cli/i18n-command": "^2.6",
+
+    "wp-coding-standards/wpcs": "^3",
+    "phpcompatibility/phpcompatibility-wp": "*",
+
+    "roave/security-advisories": "dev-latest"
+  },
+
+  "scripts": {
+    "format:php": [
+      "@format:php:plugin"
+    ],
+    "format:php:plugin": "phpcbf --standard=.phpcs.xml.dist --basepath=. -v",
+
+    "lint:php": [
+      "@lint:php:plugin"
+    ],
+    "lint:php:plugin": "phpcs --standard=.phpcs.xml.dist --basepath=. -v",
+
+    "internationalize": [
+      "@makepot:plugin",
+      "@updatepo:plugin"
+    ],
+
+    "makepot:plugin": "wp i18n make-pot themes/blazepro",
+    "updatepo:plugin": "wp i18n update-po themes/blazepro/languages/blazepro.pot",
+    "makemo:plugin": "wp i18n make-mo themes/blazepro/languages",
+
+    "packages-install": "@composer install --ignore-platform-reqs --no-interaction",
+    "packages-update": [
+      "@composer clear-cache",
+      "@composer update --prefer-stable --no-interaction"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/*": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

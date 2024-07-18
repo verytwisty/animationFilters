@@ -1,0 +1,10 @@
+.animate {
+	animation-delay: var(--animation-delay);
+	animation-duration: var(--animation-duration);
+	animation-fill-mode: forwards;
+	animation-timing-function: var(--animation-timing);
+
+	&.do-animation {
+		animation-name: var(--animation-name);
+	}
+}

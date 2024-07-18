@@ -1,0 +1,71 @@
+{
+  "name": "blazepro",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "WordPress.com Special Projects Team",
+    "url": "https://wpspecialprojects.wordpress.com/"
+  },
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "wordpress",
+    "demo"
+  ],
+  "homepage": "https://wpspecialprojects.com",
+  "repository": "https://github.com/a8cteam51/blazepro",
+  "bugs": "https://github.com/a8cteam51/blazepro/issues",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0"
+  },
+  "devDependencies": {
+    "@csstools/postcss-sass": "^5.1.1",
+    "@wordpress/block-editor": "^12.23.0",
+    "@wordpress/blocks": "^12.32.0",
+    "@wordpress/browserslist-config": "^5.38.0",
+    "@wordpress/i18n": "^4.55.0",
+    "@wordpress/postcss-plugins-preset": "^4.39.0",
+    "@wordpress/scripts": "^27.6.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^11.0.0",
+    "rtlcss": "^4.1.1"
+  },
+  "rtlcssConfig": {
+    "options": {
+      "autoRename": false,
+      "autoRenameStrict": false,
+      "blacklist": {},
+      "clean": true,
+      "greedy": false,
+      "processUrls": false,
+      "stringMap": []
+    },
+    "plugins": [],
+    "map": false
+  },
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ],
+  "scripts": {
+    "build": "npm-run-all --sequential build:**",
+    "build:filters": "wp-scripts build ./src/index.js ./src/view.js --output-path=build",
+    "format:scripts": "npm-run-all --sequential format:scripts:**",
+    "format:scripts:theme": "wp-scripts format --no-error-on-unmatched-pattern",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "lint:readme-md": "wp-scripts lint-md-docs README.md",
+    "lint:scripts": "npm-run-all --sequential lint:scripts:**",
+    "lint:scripts:theme": "wp-scripts lint-js --no-error-on-unmatched-pattern",
+    "lint:styles": "npm-run-all --sequential lint:styles:**",
+    "lint:styles:theme": "wp-scripts lint-style **/*.{css,sass,scss} style*.css --allow-empty-input --report-descriptionless-disables --report-invalid-scope-disables --report-needless-disables",
+    "packages-update": "wp-scripts packages-update --dist-tag=latest",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "start": "npm-run-all --parallel start:**",
+    "start:filters": "wp-scripts start ./src/index.js ./src/view.js --output-path=build"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "lodash": "^4.17.21"
+  }
+}

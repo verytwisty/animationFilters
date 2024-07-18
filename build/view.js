@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=document.getElementsByClassName("animate");window.addEventListener("load",(()=>{(()=>{const t=new IntersectionObserver((e=>{e.forEach((e=>{e.isIntersecting&&(e.target.classList.add("do-animation"),t.unobserve(e.target))}))}));[...e].forEach((e=>{t.observe(e)}))})()}))})();
