@@ -1,3 +1,6 @@
+/**
+ * WordPress Dependencies
+ */
 import { addFilter, applyFilters } from '@wordpress/hooks';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Button, PanelBody, ToggleControl, SelectControl, RangeControl } from '@wordpress/components';
@@ -7,10 +10,17 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import lodash from 'lodash';
 
-const allowedBlocks = applyFilters( 'animationFilters.supportedBlocks', [ 'core/group', 'core/column' ] );
-
+/**
+ * Internal Dependencies
+ */
 import 'animate.css';
 import '../sass/_style.scss';
+
+const allowedBlocks = () => {
+	const allowedBlocks = applyFilters( 'animationFilters.allowedBlocks', [ 'core/group', 'core/column' ] );
+	
+	return allowedBlocks;
+};
 
 const getAnimationNames = () => {
 	const animationNames = [];
@@ -35,7 +45,7 @@ const getAnimationNames = () => {
 const extraAttributes = ( settings ) => {
 	const { attributes, name } = settings;
 
-	if ( ! allowedBlocks.includes( name ) ) {
+	if ( ! allowedBlocks().includes( name ) ) {
 		return settings;
 	}
 
@@ -85,7 +95,7 @@ const withInspectorControls = createHigherOrderComponent( ( BlockEdit ) => {
 		   name,
 	   } = props;
 
-	   if ( ! allowedBlocks.includes( name ) ) {
+	   if ( ! allowedBlocks().includes( name ) ) {
 		   return <BlockEdit { ...props } />;
 	   }
 
@@ -176,7 +186,7 @@ const toggleAnimationBE = createHigherOrderComponent( ( BlockListBlock ) => {
 		const { attributes, name, setAttributes } = props;
 		const { previewAnimation, animationType, animationTiming, animationDuration, animationDelay } = attributes;
 
-		if ( ! allowedBlocks.includes( name ) ) {
+		if ( ! allowedBlocks().includes( name ) ) {
 			return <BlockListBlock { ...props } />;
 		}
 
@@ -202,7 +212,7 @@ const toggleAnimationBE = createHigherOrderComponent( ( BlockListBlock ) => {
 
 
 function applyExtraClasses( extraProps, blockType, attributes ) {
-	if ( ! allowedBlocks.includes( blockType.name ) ) {
+	if ( ! allowedBlocks().includes( blockType.name ) ) {
 		return extraProps;
 	}
 
